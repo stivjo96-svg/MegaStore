@@ -31,6 +31,8 @@
 
                     <form action="../controllers/UsuarioController.php" method="POST">
 
+                        <input type="hidden" name="accion" value="registro">
+
                         <div class="mb-3">
                             <label class="form-label">Cédula</label>
                             <input type="text" class="form-control" name="cedula" required>

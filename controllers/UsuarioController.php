@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+
+require_once __DIR__ . '/../models/Usuario.php';
+
 require_once __DIR__ . '/../models/Usuario.php';
 
 class UsuarioController
@@ -11,36 +15,108 @@ class UsuarioController
         $this->usuario = new Usuario();
     }
 
-    public function registrar()
+    public function procesarSolicitud()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return;
         }
 
-        // Validación básica
+        $accion = $_POST['accion'] ?? '';
+
+        switch ($accion) {
+
+            case 'registro':
+                $this->registrar();
+                break;
+
+            case 'login':
+                $this->login();
+                break;
+
+            case 'logout':
+                $this->logout();
+                break;
+
+            default:
+                die("Acción no válida.");
+        }
+    }
+
+    private function registrar()
+    {
         if ($_POST['password'] !== $_POST['confirmar_password']) {
             die("Las contraseñas no coinciden.");
         }
 
         $datos = [
+
             'rol_id' => 2,
+
             'cedula' => trim($_POST['cedula']),
+
             'nombres' => trim($_POST['nombres']),
+
             'apellidos' => trim($_POST['apellidos']),
+
             'email' => trim($_POST['email']),
+
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+
             'telefono' => trim($_POST['telefono']),
+
             'direccion' => trim($_POST['direccion'])
+
         ];
 
         if ($this->usuario->registrar($datos)) {
+
             header("Location: ../views/login.php?registro=ok");
             exit;
+
         } else {
+
             die("No fue posible registrar el usuario.");
+
         }
     }
+
+    private function login()
+    {
+        $email = trim($_POST['email']);
+        $password = $_POST['password'];
+
+        $usuario = $this->usuario->buscarPorEmail($email);
+
+        if (!$usuario) {
+            die("El correo electrónico no está registrado.");
+        }
+
+        if (!password_verify($password, $usuario['password'])) {
+            die("La contraseña es incorrecta.");
+        }
+
+        $_SESSION['id'] = $usuario['id'];
+        $_SESSION['rol'] = $usuario['rol_id'];
+        $_SESSION['nombre'] = $usuario['nombres'];
+        $_SESSION['email'] = $usuario['email'];
+
+        if ($usuario['rol_id'] == 1) {
+            header("Location: ../admin/dashboard/index.php");
+        } else {
+            header("Location: ../views/inicio.php");
+        }
+
+        exit;
+    }
+
+    private function logout()
+    {
+
+        // Lo implementaremos después
+
+    }
+
 }
 
 $controller = new UsuarioController();
-$controller->registrar();
+$controller->procesarSolicitud();

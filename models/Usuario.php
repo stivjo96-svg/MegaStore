@@ -33,4 +33,17 @@ class Usuario
 
         return $stmt->execute();
     }
+
+    public function buscarPorEmail($email)
+    {
+        $sql = "SELECT * FROM usuarios WHERE email = :email LIMIT 1";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->bindParam(':email', $email);
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
 }
