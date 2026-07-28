@@ -101,9 +101,9 @@ class UsuarioController
         $_SESSION['email'] = $usuario['email'];
 
         if ($usuario['rol_id'] == 1) {
-            header("Location: ../admin/dashboard/index.php");
+            header("Location: /MegaStore/admin/dashboard/index.php");
         } else {
-            header("Location: ../views/inicio.php");
+            header("Location: /MegaStore/views/inicio.php");
         }
 
         exit;
