@@ -101,9 +101,13 @@ class UsuarioController
         $_SESSION['email'] = $usuario['email'];
 
         if ($usuario['rol_id'] == 1) {
+
             header("Location: /MegaStore/admin/dashboard/index.php");
+
         } else {
-            header("Location: /MegaStore/views/inicio.php");
+
+            header("Location: /MegaStore/index.php");
+
         }
 
         exit;
@@ -112,7 +116,13 @@ class UsuarioController
     private function logout()
     {
 
-        // Lo implementaremos después
+        session_unset();
+
+        session_destroy();
+
+        header("Location: /MegaStore/index.php");
+
+        exit;
 
     }
 
