@@ -106,7 +106,21 @@ class UsuarioController
 
         } else {
 
+            if (isset($_SESSION['redirect_after_login'])) {
+
+            $url = $_SESSION['redirect_after_login'];
+
+            unset($_SESSION['redirect_after_login']);
+
+            header("Location: $url");
+
+        } else {
+
             header("Location: /MegaStore/index.php");
+
+        }
+
+        exit;
 
         }
 

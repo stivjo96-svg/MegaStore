@@ -1,195 +1,181 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-
-<div class="container">
-
-<a class="navbar-brand fw-bold" href="/MegaStore">
-
-🔨 MegaFerre
-
-</a>
-
-<button
-class="navbar-toggler"
-data-bs-toggle="collapse"
-data-bs-target="#menu">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div
-class="collapse navbar-collapse"
-id="menu">
-
-<ul class="navbar-nav me-auto">
-
-<li class="nav-item">
-
-<a class="nav-link" href="#">
-
-Inicio
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link" href="#">
-
-Herramientas
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link" href="#">
-
-Eléctricos
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link" href="#">
-
-Plomería
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link" href="#">
-
-Pinturas
-
-</a>
-
-</li>
-
-</ul>
-
-<form class="d-flex me-3">
-
-<input
-class="form-control"
-type="search"
-placeholder="Buscar productos">
-
-</form>
-
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$cantidadCarrito = 0;
+
+if (isset($_SESSION['carrito'])) {
+    $cantidadCarrito = array_sum($_SESSION['carrito']);
+}
+
 ?>
 
-<?php if(isset($_SESSION['id'])){ ?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
 
-<div class="dropdown me-2">
+    <div class="container">
 
-    <button
-        class="btn btn-light dropdown-toggle"
-        data-bs-toggle="dropdown">
+        <a class="navbar-brand fw-bold" href="/MegaStore">
+            🔨 MegaFerre
+        </a>
 
-        <i class="bi bi-person-circle"></i>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu">
 
-        Hola, <?= $_SESSION['nombre']; ?>
+            <span class="navbar-toggler-icon"></span>
 
-    </button>
+        </button>
 
-    <ul class="dropdown-menu dropdown-menu-end">
+        <div class="collapse navbar-collapse" id="menu">
 
-        <?php if($_SESSION['rol']==1){ ?>
+            <ul class="navbar-nav me-auto">
 
-        <li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/MegaStore">
+                        Inicio
+                    </a>
+                </li>
 
-            <a class="dropdown-item"
-                href="/MegaStore/admin/dashboard/index.php">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Herramientas
+                    </a>
+                </li>
 
-                Panel Administrativo
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Eléctricos
+                    </a>
+                </li>
 
-            </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Plomería
+                    </a>
+                </li>
 
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Pinturas
+                    </a>
+                </li>
 
-        <?php } ?>
+            </ul>
 
-        <li>
-
-            <a class="dropdown-item"
-                href="/MegaStore/cliente/mis_pedidos.php">
-
-                Mis pedidos
-
-            </a>
-
-        </li>
-
-        <li><hr class="dropdown-divider"></li>
-
-        <li>
-
-            <form
-                action="/MegaStore/controllers/UsuarioController.php"
-                method="POST">
+            <form class="d-flex me-3">
 
                 <input
-                    type="hidden"
-                    name="accion"
-                    value="logout">
-
-                <button
-                    class="dropdown-item text-danger">
-
-                    Cerrar sesión
-
-                </button>
+                    class="form-control"
+                    type="search"
+                    placeholder="Buscar productos">
 
             </form>
 
-        </li>
+            <?php if(isset($_SESSION['id'])){ ?>
 
-    </ul>
+                <div class="dropdown me-2">
 
-</div>
+                    <button
+                        class="btn btn-light dropdown-toggle"
+                        data-bs-toggle="dropdown">
 
-<?php }else{ ?>
+                        <i class="bi bi-person-circle"></i>
 
-<a href="/MegaStore/auth/login.php"
-class="btn btn-light me-2">
+                        Hola, <?= $_SESSION['nombre']; ?>
 
-<i class="bi bi-person"></i>
+                    </button>
 
-Ingresar
+                    <ul class="dropdown-menu dropdown-menu-end">
 
-</a>
+                        <?php if($_SESSION['rol']==1){ ?>
 
-<?php } ?>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="/MegaStore/admin/dashboard/index.php">
 
-<a href="#"
-class="btn btn-success">
+                                    Panel Administrativo
 
-<i class="bi bi-cart"></i>
+                                </a>
+                            </li>
 
-Carrito
+                        <?php } ?>
 
-<span class="badge bg-danger">
+                        <li>
 
-0
+                            <a class="dropdown-item"
+                               href="/MegaStore/cliente/mis_pedidos.php">
 
-</span>
+                                Mis pedidos
 
-</a>
+                            </a>
 
-</div>
+                        </li>
 
-</div>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+
+                            <form
+                                action="/MegaStore/controllers/UsuarioController.php"
+                                method="POST">
+
+                                <input
+                                    type="hidden"
+                                    name="accion"
+                                    value="logout">
+
+                                <button
+                                    type="submit"
+                                    class="dropdown-item text-danger">
+
+                                    Cerrar sesión
+
+                                </button>
+
+                            </form>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            <?php } else { ?>
+
+                <a href="/MegaStore/auth/login.php"
+                   class="btn btn-light me-2">
+
+                    <i class="bi bi-person"></i>
+
+                    Ingresar
+
+                </a>
+
+            <?php } ?>
+
+            <a href="/MegaStore/cliente/carrito.php"
+               class="btn btn-success">
+
+                <i class="bi bi-cart"></i>
+
+                Carrito
+
+                <span class="badge bg-danger">
+
+                    <?= $cantidadCarrito ?>
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
 
 </nav>

@@ -178,14 +178,29 @@ Productos destacados
 
     <div class="card-footer bg-white border-0">
 
-        <button
-            class="btn btn-success w-100">
+        <form action="/MegaStore/controllers/CarritoController.php" method="POST">
 
-            <i class="bi bi-cart-plus"></i>
+            <input
+                type="hidden"
+                name="accion"
+                value="agregar">
 
-            Agregar al carrito
+            <input
+                type="hidden"
+                name="producto_id"
+                value="<?= $producto['id']; ?>">
 
-        </button>
+            <button
+                type="submit"
+                class="btn btn-success w-100">
+
+                <i class="bi bi-cart-plus"></i>
+
+                Agregar al carrito
+
+            </button>
+
+        </form>
 
     </div>
 
