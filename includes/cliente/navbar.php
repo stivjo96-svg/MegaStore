@@ -160,13 +160,15 @@ if (isset($_SESSION['carrito'])) {
             <?php } ?>
 
             <a href="/MegaStore/cliente/carrito.php"
-               class="btn btn-success">
+                class="btn btn-success">
 
                 <i class="bi bi-cart"></i>
 
                 Carrito
 
-                <span class="badge bg-danger">
+                <span
+                    class="badge bg-danger"
+                    id="contadorCarrito">
 
                     <?= $cantidadCarrito ?>
 

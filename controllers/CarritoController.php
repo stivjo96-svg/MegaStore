@@ -26,6 +26,21 @@ switch ($accion) {
 
         }
 
+        // Si la petición viene por AJAX
+        if (
+            isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
+        ) {
+
+            echo json_encode([
+                "ok" => true,
+                "cantidad" => array_sum($_SESSION['carrito'])
+            ]);
+
+            exit;
+        }
+
+        // Si es un formulario normal
         header("Location: /MegaStore/cliente/carrito.php");
         exit;
 

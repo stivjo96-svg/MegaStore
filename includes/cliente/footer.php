@@ -2,6 +2,10 @@
 
 <script src="/MegaStore/assets/js/app.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="/MegaStore/assets/js/carrito.js"></script>
+
 </body>
 
 </html>
