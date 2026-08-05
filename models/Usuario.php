@@ -46,4 +46,17 @@ class Usuario
 
         return $stmt->fetch();
     }
+
+    public function obtenerPorId($id)
+    {
+        $sql = "SELECT * FROM usuarios WHERE id = :id LIMIT 1";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

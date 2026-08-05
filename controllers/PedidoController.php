@@ -98,6 +98,39 @@ class PedidoController
 
         }
 
+        require_once __DIR__ . '/../pdf/FacturaPDF.php';
+        require_once __DIR__ . '/../services/MailService.php';
+
+        $pdf = new FacturaPDF();
+
+        $pdfGenerado = $pdf->generar($pedido_id);
+
+        $_SESSION['ultima_factura'] = basename($pdfGenerado);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enviar correo
+        |--------------------------------------------------------------------------
+        */
+
+        $mail = new MailService();
+
+        $nombreCliente = $_SESSION['nombre'] . ' ' . $_SESSION['apellidos'];
+
+        $correoCliente = $_SESSION['email'];
+
+        $mail->enviarFactura(
+
+            $correoCliente,
+
+            $nombreCliente,
+
+            $pdfGenerado,
+
+            $codigo
+
+        );
+
         unset($_SESSION['carrito']);
 
         header("Location: /MegaStore/cliente/compra_exitosa.php");

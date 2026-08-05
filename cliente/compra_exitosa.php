@@ -1,35 +1,81 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/../includes/cliente/header.php';
 require_once __DIR__ . '/../includes/cliente/navbar.php';
+
+$factura = $_SESSION['ultima_factura'] ?? null;
 
 ?>
 
 <div class="container mt-5">
 
-    <div class="alert alert-success text-center shadow">
+    <div class="card shadow">
 
-        <h2>🎉 ¡Compra realizada con éxito!</h2>
+        <div class="card-body text-center">
 
-        <p>
+            <h2 class="text-success">
 
-            Gracias por comprar en <strong>MegaFerre</strong>.
+                🎉 Compra realizada correctamente
 
-        </p>
+            </h2>
 
-        <a
-            href="/MegaStore/cliente/productos.php"
-            class="btn btn-primary">
+            <p class="mt-3">
 
-            Seguir comprando
+                Gracias por comprar en <strong>MegaFerre</strong>
 
-        </a>
+            </p>
+
+            <hr>
+
+            <p>
+
+                ✅ Pedido registrado correctamente.
+
+            </p>
+
+            <p>
+
+                ✅ Factura generada correctamente.
+
+            </p>
+
+            <?php if($factura){ ?>
+
+                <a
+
+                    href="/MegaStore/facturas/<?= $factura ?>"
+
+                    target="_blank"
+
+                    class="btn btn-danger">
+
+                    📄 Descargar factura
+
+                </a>
+
+            <?php } ?>
+
+            <a
+
+                href="/MegaStore"
+
+                class="btn btn-primary">
+
+                🛒 Seguir comprando
+
+            </a>
+
+        </div>
 
     </div>
 
 </div>
 
 <?php
+
+unset($_SESSION['ultima_factura']);
 
 require_once __DIR__ . '/../includes/cliente/footer.php';
 

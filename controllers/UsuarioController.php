@@ -98,6 +98,7 @@ class UsuarioController
         $_SESSION['id'] = $usuario['id'];
         $_SESSION['rol'] = $usuario['rol_id'];
         $_SESSION['nombre'] = $usuario['nombres'];
+        $_SESSION['apellidos'] = $usuario['apellidos'];
         $_SESSION['email'] = $usuario['email'];
 
         if ($usuario['rol_id'] == 1) {
